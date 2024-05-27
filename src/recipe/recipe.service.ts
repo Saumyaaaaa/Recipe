@@ -7,11 +7,11 @@ import { CreateRecipeDto } from './dto/create-recipe.dto';
 @Injectable()
 export class RecipeService {
   constructor(private readonly prisma: PrismaService) {}
-
   create(createRecipeDto: CreateRecipeDto) {
-    return 'This action adds a new recipe';
+    return this.prisma.recipe.create({
+      data: createRecipeDto,
+    });
   }
-
   async findAll() {
     return this.prisma.recipe.findMany();
   }
@@ -22,7 +22,10 @@ export class RecipeService {
   }
 
   update(id: number, updateRecipeDto: UpdateRecipeDto) {
-    return `This action updates a #${id} recipe`;
+    return this.prisma.recipe.update({
+      where: { id },
+      data: updateRecipeDto,
+    });
   }
 
   remove(id: number) {
