@@ -1,4 +1,4 @@
-import { Body, Injectable, Post } from '@nestjs/common';
+import { Body, Delete, Injectable, Param, Post } from '@nestjs/common';
 
 import { PrismaService } from 'src/prisma/prisma.service';
 import { UpdateRecipeDto } from './dto/update-recipe.dto';
@@ -28,7 +28,9 @@ export class RecipeService {
     });
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} recipe`;
+  async remove(id: number) {
+    return await this.prisma.recipe.delete({
+      where: { id },
+    });
   }
 }
